@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Box, Container, Typography } from '@mui/material';
-import { themeOptions } from '../../../theme/index';
+import theme from 'theme';
 import { ArrowBack } from '@mui/icons-material';
 
 export default function Backtrack() {
@@ -10,20 +10,33 @@ export default function Backtrack() {
   const prevLocation =
     asPath.includes('update') || asPath.includes('checkin') ? 'Fridge' : 'Map';
 
+  const onBack = () => {
+    if (window.history.length > 2) {
+      router.back();
+    } else {
+      let url =
+        asPath.includes('update') || asPath.includes('checkin')
+          ? '/fridge'
+          : 'fridge/map';
+      window.history.replaceState(null, null, url);
+      router.back();
+    }
+  };
+
   return (
     <Box>
       <Container
         fixed
         disableGutters
         maxWidth={false}
-        onClick={() => router.back()}
+        onClick={() => onBack()}
         sx={{
           minWidth: '100%',
           height: '54px',
           paddingLeft: '17px',
           display: 'flex',
           alignItems: 'center',
-          color: themeOptions.palette.text.secondary,
+          color: theme.palette.text.secondary,
           ':hover': { cursor: 'pointer' },
         }}
       >

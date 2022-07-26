@@ -1,28 +1,37 @@
-import { Card } from '@mui/material';
-import { useState } from 'react';
+import { Box, Container } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
-const PreviewImage = ({ file, width, height }) => {
+const PreviewImage = ({ file, width = 400, height = 200 }) => {
   const [preview, setPreview] = useState(null);
-  const reader = new FileReader();
+  // const reader = new FileReader();
 
-  reader.readAsDataURL(file);
+  // let input = file.target;
+  // console.table(input)
+  // reader.readAsDataURL(input.files[0]);
 
-  reader.onload = () => {
-    setPreview(reader.result);
-  };
+  // reader.onload = () => {
+  //     setPreview(reader.result);
+  //   };
+
+  // useEffect(() => {
+
+  //   console.table(file)
+  // }, [file])
 
   return (
-    <Card
+    <Container
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        padding: '20px',
-        border: 'none',
-        boxShadow: 'none',
+        width: 1,
       }}
     >
-      <img src={preview} alt="Preview" width={width} height={height} />
-    </Card>
+      <img src={file} alt="Preview" width={'100%'} height="auto" />
+      {/* <Image src={file} alt="Preview"  width={800}
+            height={600}
+            objectFit='contain' /> */}
+    </Container>
   );
 };
 
