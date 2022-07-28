@@ -71,15 +71,15 @@ export default function DialogUpdateFridgeStatus({
       label: 'Empty',
     },
     {
-      value: 33,
+      value: 33.3,
       label: 'A Few Items',
     },
     {
-      value: 66,
+      value: 66.6,
       label: 'Many Items',
     },
     {
-      value: 100,
+      value: 99.9,
       label: 'Full',
     },
   ];
@@ -156,8 +156,8 @@ export default function DialogUpdateFridgeStatus({
                         value={formik.values.foodPercentage}
                         onChange={formik.handleChange}
                         min={0}
-                        max={100}
-                        step={33}
+                        max={99.9}
+                        step={33.3}
                         marks={sliderMarks}
                         sx={fridgeSliderStyles}
                         size="medium"
