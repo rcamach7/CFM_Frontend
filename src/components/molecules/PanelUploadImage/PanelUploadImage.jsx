@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import PreviewImage from './PreviewImage';
 import { useState } from 'react';
 
-const DialogUploadImage = (props) => {
+const PanelUploadImage = (props) => {
   const { onToggleUpload } = props;
   const formik = useFormik({
     initialValues: { image: null },
@@ -39,14 +39,16 @@ const DialogUploadImage = (props) => {
     ];
     if (!supportedImageTypes.includes(uploadType)) {
       setSnack({ ...snack, open: true });
+    } else {
+      console.log(imageUpload.type);
+      const imageOut = await convertImage(imageUpload);
+      formik.setFieldValue('image', imageOut);
+      formik.setTouched({ image: true });
     }
-    console.log(imageUpload.type);
-    const imageOut = await convertImage(imageUpload);
-    formik.setFieldValue('image', imageOut);
-    formik.setTouched({ image: true });
+    return;
   };
 
-  const convertImage = (image) => {
+  const convertImage = async (image) => {
     return new Promise((resolve) => {
       let src = URL.createObjectURL(image);
       let canvas = document.createElement('canvas');
@@ -149,4 +151,4 @@ const DialogUploadImage = (props) => {
   );
 };
 
-export default DialogUploadImage;
+export default PanelUploadImage;

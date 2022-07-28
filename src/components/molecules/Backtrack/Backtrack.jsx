@@ -3,6 +3,8 @@ import { Box, Container, Typography } from '@mui/material';
 import theme from 'theme';
 import { ArrowBack } from '@mui/icons-material';
 
+const INITIAL_HISTORY_LENGTH = 2;
+
 export default function Backtrack() {
   const router = useRouter();
   const { asPath } = useRouter();
@@ -11,14 +13,7 @@ export default function Backtrack() {
     asPath.includes('update') || asPath.includes('checkin') ? 'Fridge' : 'Map';
 
   const onBack = () => {
-    if (window.history.length > 2) {
-      router.back();
-    } else {
-      let url =
-        asPath.includes('update') || asPath.includes('checkin')
-          ? '/fridge'
-          : 'fridge/map';
-      window.history.replaceState(null, null, url);
+    if (window.history.length > INITIAL_HISTORY_LENGTH) {
       router.back();
     }
   };
