@@ -1,4 +1,4 @@
-import { DialogUploadImage } from 'components/molecules';
+import { PanelUploadImage } from 'components/molecules';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
@@ -20,7 +20,7 @@ export default function PhotoUploadPreview() {
   return (
     <Box display="flex" justifyContent={'center'}>
       {uploadImage ? (
-        <DialogUploadImage onToggleUpload={onToggleUpload} />
+        <PanelUploadImage onToggleUpload={onToggleUpload} />
       ) : (
         <Button
           variant="contained"

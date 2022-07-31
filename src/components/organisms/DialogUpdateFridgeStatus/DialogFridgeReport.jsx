@@ -20,12 +20,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
+import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import theme from 'theme';
 
-import { DialogUploadImage } from 'components/molecules';
+import { Report } from 'schema/dialog';
 
-export default function DialogUpdateFridgeStatus({
+import { PanelUploadImage } from 'components/molecules';
+
+export default function DialogFridgeReport({
   fridgeName = 'Community Fridge Name',
 }) {
   //Initialize Formik form and initial form values
@@ -100,7 +102,7 @@ export default function DialogUpdateFridgeStatus({
   return (
     <Container>
       {uploadPhoto ? (
-        <DialogUploadImage />
+        <PanelUploadImage />
       ) : (
         <Stack direction="column" spacing={4} mx={4} mb={4}>
           <Box id="update-header">
@@ -126,7 +128,7 @@ export default function DialogUpdateFridgeStatus({
                       <Button
                         onClick={onAddPhoto}
                         variant="contained"
-                        startIcon={<AddAPhotoOutlinedIcon />}
+                        startIcon={<AddAPhotoRoundedIcon />}
                       >
                         Upload Photo
                       </Button>
@@ -270,6 +272,6 @@ export default function DialogUpdateFridgeStatus({
     </Container>
   );
 }
-DialogUpdateFridgeStatus.propTypes = {
+DialogFridgeReport.propTypes = {
   fridgeName: PropTypes.string.isRequired,
 };

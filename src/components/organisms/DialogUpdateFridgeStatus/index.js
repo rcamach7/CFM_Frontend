@@ -1,1 +1,1 @@
-export { default } from './DialogUpdateFridgeStatus';
+export { default } from './DialogFridgeReport';

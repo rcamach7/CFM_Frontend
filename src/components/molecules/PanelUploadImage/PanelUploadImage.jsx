@@ -44,11 +44,12 @@ const PanelUploadImage = (props) => {
       const imageOut = await convertImage(imageUpload);
       formik.setFieldValue('image', imageOut);
       formik.setTouched({ image: true });
+      console.log(imageOut); //@TODO - Make Post Request
     }
     return;
   };
 
-  const convertImage = async (image) => {
+  const convertImage = (image) => {
     return new Promise((resolve) => {
       let src = URL.createObjectURL(image);
       let canvas = document.createElement('canvas');
