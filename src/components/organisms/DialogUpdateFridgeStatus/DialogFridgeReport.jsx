@@ -34,11 +34,11 @@ export default function DialogFridgeReport({
   const formik = useFormik({
     initialValues: {
       foodPhotoURL: null,
-      foodPercentage: 25,
+      foodPercentage: 0,
       operation: 'good',
       notes: '',
     },
-
+    validationSchema: Report,
     onSubmit: (values) => {
       console.table(values);
       alert(JSON.stringify(values, null, 2));
@@ -51,8 +51,16 @@ export default function DialogFridgeReport({
   });
   const { uploadPhoto } = state;
 
-  const onAddPhoto = () => {
-    setState({ ...state, uploadPhoto: true });
+  const onToggleAddPhoto = () => {
+    setState({ ...state, uploadPhoto: !state.uploadPhoto });
+  };
+
+  const setPhoto = (photo) => {
+    formik.setFieldValue(foodPhotoURL, photo);
+  };
+
+  const resetPhoto = () => {
+    formik.setFieldValue(foodPhotoURL, null);
   };
 
   // Functionality for MUI stepper component
@@ -73,15 +81,15 @@ export default function DialogFridgeReport({
       label: 'Empty',
     },
     {
-      value: 33.3,
+      value: 25,
       label: 'A Few Items',
     },
     {
-      value: 66.6,
+      value: 50,
       label: 'Many Items',
     },
     {
-      value: 99.9,
+      value: 100,
       label: 'Full',
     },
   ];
@@ -101,174 +109,167 @@ export default function DialogFridgeReport({
 
   return (
     <Container>
-      {uploadPhoto ? (
-        <PanelUploadImage />
-      ) : (
-        <Stack direction="column" spacing={4} mx={4} mb={4}>
-          <Box id="update-header">
-            <Typography variant="h2">Community Fridge Update:</Typography>
-            <Typography variant="h5">{fridgeName}</Typography>
-          </Box>
-          <form onSubmit={formik.handleSubmit}>
-            <Stepper activeStep={activeStep} orientation={'vertical'}>
-              <Step expanded={activeStep == 3}>
-                <StepLabel>Upload Photo</StepLabel>
-                <StepContent>
-                  <Stack
-                    direction="column"
-                    spacing={3}
-                    mt={2}
-                    justifyContent="space-between"
-                  >
-                    <Typography>
-                      If you have a photo of the fridge contents, you can upload
-                      that here. If you don&#39;t have one, select SKIP PHOTO.
-                    </Typography>
-                    {activeStep != 3 && (
+      <Stack direction="column" spacing={4} mx={4} mb={4}>
+        <Box id="update-header">
+          <Typography variant="h2">Community Fridge Update:</Typography>
+          <Typography variant="h5">{fridgeName}</Typography>
+        </Box>
+        <form onSubmit={formik.handleSubmit}>
+          <Stepper activeStep={activeStep} orientation={'vertical'}>
+            <Step>
+              <StepLabel>Upload Photo</StepLabel>
+              <StepContent>
+                <Stack
+                  direction="column"
+                  spacing={3}
+                  mt={2}
+                  justifyContent="space-between"
+                >
+                  {uploadPhoto ? (
+                    <PanelUploadImage
+                      onToggleAddPhoto={onToggleAddPhoto}
+                      setPhoto={setPhoto}
+                      resetPhoto={resetPhoto}
+                    />
+                  ) : (
+                    <>
+                      <Typography>
+                        If you have a photo of the fridge contents, you can
+                        upload that here. If you don&#39;t have one, select SKIP
+                        PHOTO.
+                      </Typography>
                       <Button
-                        onClick={onAddPhoto}
+                        onClick={onToggleAddPhoto}
                         variant="contained"
                         startIcon={<AddAPhotoRoundedIcon />}
                       >
                         Upload Photo
                       </Button>
-                    )}
-                    {activeStep != 3 && (
                       <Button onClick={handleNext} variant="outlined">
                         Skip Photo
                       </Button>
-                    )}
-                  </Stack>
-                </StepContent>
-              </Step>
-              <Step expanded={activeStep == 3}>
-                <StepLabel>Status</StepLabel>
-                <StepContent>
-                  <Stack
-                    direction="column"
-                    spacing={3}
-                    mt={2}
-                    justifyContent="space-between"
-                  >
-                    <FormLabel>How full is the fridge?</FormLabel>
-                    <FormGroup>
-                      <Slider
-                        name="foodPercentage"
-                        aria-label="Fridge fullness"
-                        value={formik.values.foodPercentage}
-                        onChange={formik.handleChange}
-                        min={0}
-                        max={99.9}
-                        step={33.3}
-                        marks={sliderMarks}
-                        sx={fridgeSliderStyles}
-                        size="medium"
-                      />
-                    </FormGroup>
-                    <FormControl>
-                      <FormLabel>Select if applicable:</FormLabel>
-                      <RadioGroup
-                        name="operation"
-                        value={formik.values.operation}
-                        onChange={formik.handleChange}
-                      >
-                        <FormGroup>
-                          <FormControlLabel
-                            control={<Radio />}
-                            value="out of order"
-                            label="Fridge needs servicing"
-                          />
-                          <FormControlLabel
-                            control={<Radio />}
-                            value="dirty"
-                            label="Fridge needs cleaning"
-                          />
-                          <FormControlLabel
-                            control={<Radio />}
-                            value="not at location"
-                            label="Fridge is no longer at location"
-                          />
-                        </FormGroup>
-                      </RadioGroup>
-                    </FormControl>
-                    {activeStep != 3 && (
-                      <Button
-                        onClick={handleNext}
-                        variant="contained"
-                        fullWidth
-                      >
-                        Continue
-                      </Button>
-                    )}
-                    {activeStep != 3 && (
-                      <Button onClick={handleBack} variant="outlined" fullWidth>
-                        Back
-                      </Button>
-                    )}
-                  </Stack>
-                </StepContent>
-              </Step>
-              <Step expanded={activeStep == 3}>
-                <StepLabel>Notes</StepLabel>
-                <StepContent>
-                  <Stack
-                    spacing={3}
-                    mt={2}
-                    direction="column"
-                    justifyContent="space-between"
-                  >
-                    <TextField
-                      name="notes"
-                      value={formik.values.notes}
-                      id="notes"
-                      placeholder="Got an update or request? Leave your notes here!"
+                    </>
+                  )}
+                </Stack>
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>Status</StepLabel>
+              <StepContent>
+                <Stack
+                  direction="column"
+                  spacing={3}
+                  mt={2}
+                  justifyContent="space-between"
+                >
+                  <FormLabel>How full is the fridge?</FormLabel>
+                  <FormGroup>
+                    <Slider
+                      name="foodPercentage"
+                      aria-label="Fridge fullness"
+                      value={formik.values.foodPercentage}
                       onChange={formik.handleChange}
-                      multiline
-                      rows={5}
-                      fullWidth
+                      onBlur={formik.handleBlur}
+                      min={0}
+                      max={100}
+                      step={25}
+                      marks={sliderMarks}
+                      sx={fridgeSliderStyles}
+                      size="medium"
                     />
-                    {activeStep != 3 && (
-                      <Button
-                        onClick={handleNext}
-                        variant="contained"
-                        fullWidth
-                      >
-                        Continue
-                      </Button>
-                    )}
-                    {activeStep != 3 && (
-                      <Button onClick={handleBack} variant="outlined" fullWidth>
-                        Back
-                      </Button>
-                    )}
-                  </Stack>
-                </StepContent>
-              </Step>
-              <Step>
-                <StepLabel>Confirm</StepLabel>
-                <StepContent>
-                  <Stack
-                    mt={2}
-                    spacing={3}
-                    justifyContent="space-between"
-                    direction="column"
-                  >
-                    <Typography>
-                      If all the details are correct, please select CONFIRM.
-                    </Typography>
-                    <Button type="submit" variant="contained" fullWidth>
-                      Confirm
-                    </Button>
-                    <Button onClick={handleBack} variant="outlined" fullWidth>
-                      Back
-                    </Button>
-                  </Stack>
-                </StepContent>
-              </Step>
-            </Stepper>
-          </form>
-        </Stack>
-      )}
+                  </FormGroup>
+                  <FormControl>
+                    <FormLabel>Select if applicable:</FormLabel>
+                    <RadioGroup
+                      name="operation"
+                      value={formik.values.operation}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    >
+                      <FormGroup>
+                        <FormControlLabel
+                          control={<Radio />}
+                          value="out of order"
+                          label="Fridge needs servicing"
+                        />
+                        <FormControlLabel
+                          control={<Radio />}
+                          value="dirty"
+                          label="Fridge needs cleaning"
+                        />
+                        <FormControlLabel
+                          control={<Radio />}
+                          value="not at location"
+                          label="Fridge is no longer at location"
+                        />
+                      </FormGroup>
+                    </RadioGroup>
+                  </FormControl>
+                  <Button onClick={handleNext} variant="contained" fullWidth>
+                    Continue
+                  </Button>
+                  <Button onClick={handleBack} variant="outlined" fullWidth>
+                    Back
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>Notes</StepLabel>
+              <StepContent>
+                <Stack
+                  spacing={3}
+                  mt={2}
+                  direction="column"
+                  justifyContent="space-between"
+                >
+                  <TextField
+                    name="notes"
+                    value={formik.values.notes}
+                    id="notes"
+                    placeholder="Got an update or request? Leave your notes here!"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    multiline
+                    rows={5}
+                    fullWidth
+                  />
+                  {formik.errors.notes ? (
+                    <div>{formik.errors.notes}</div>
+                  ) : null}
+                  <Button onClick={handleNext} variant="contained" fullWidth>
+                    Continue
+                  </Button>
+                  <Button onClick={handleBack} variant="outlined" fullWidth>
+                    Back
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
+            <Step>
+              <StepLabel>Confirm</StepLabel>
+              <StepContent>
+                <Stack
+                  mt={2}
+                  spacing={3}
+                  justifyContent="space-between"
+                  direction="column"
+                >
+                  <Typography>
+                    If all the details are correct, please select CONFIRM.
+                  </Typography>
+                  <Button type="submit" variant="contained" fullWidth>
+                    Confirm
+                  </Button>
+                  <Button onClick={handleBack} variant="outlined" fullWidth>
+                    Back
+                  </Button>
+                </Stack>
+              </StepContent>
+            </Step>
+          </Stepper>
+        </form>
+      </Stack>
     </Container>
   );
 }

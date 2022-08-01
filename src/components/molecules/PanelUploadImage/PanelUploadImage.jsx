@@ -4,12 +4,13 @@ import PreviewImage from './PreviewImage';
 import { useState } from 'react';
 
 const PanelUploadImage = (props) => {
-  const { onToggleUpload } = props;
+  const { onToggleAddPhoto, setPhoto, resetPhoto } = props;
   const formik = useFormik({
     initialValues: { image: null },
-    onSubmit: (values) => {
-      console.table(values);
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (photo) => {
+      setPhoto(photo);
+      console.table(photo);
+      alert(JSON.stringify(photo, null, 2));
     },
   });
 
@@ -26,7 +27,8 @@ const PanelUploadImage = (props) => {
     setSnack({ ...snack, open: false });
   };
   const onCancel = () => {
-    onToggleUpload();
+    resetPhoto();
+    onToggleAddPhoto();
   };
   const onAddImage = async (event) => {
     const imageUpload = event.target.files[0];
@@ -85,22 +87,12 @@ const PanelUploadImage = (props) => {
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'row',
+              flexDirection: 'column',
               justifyContent: 'center',
             }}
           >
-            <Box p={1} sx={{ width: 1 / 2 }}>
-              <Button
-                variant="outlined"
-                fullWidth
-                onClick={onCancel}
-                aria-label="Click here to cancel image upload"
-              >
-                Cancel
-              </Button>
-            </Box>
-            <Box p={1} sx={{ width: 1 / 2 }}>
-              <label htmlFor="image" sx={{ width: 1 / 2 }}>
+            <Box p={1}>
+              <label htmlFor="image">
                 <input
                   style={{ display: 'none' }}
                   id="image"
@@ -109,14 +101,24 @@ const PanelUploadImage = (props) => {
                   onChange={(event) => onAddImage(event)}
                 />
                 <Button
-                  fullWidth
                   aria-label="Click here to choose an image to upload."
                   variant="contained"
                   component="span"
+                  fullWidth
                 >
-                  {formik.values.image ? 'Change Photo' : 'Upload Photo'}
+                  {formik.values.image ? 'Change Photo' : 'Select Photo'}
                 </Button>
               </label>
+            </Box>
+            <Box p={1}>
+              <Button
+                variant="outlined"
+                fullWidth
+                onClick={onCancel}
+                aria-label="Click here to cancel image upload"
+              >
+                Cancel
+              </Button>
             </Box>
           </Box>
           {formik.values.image && <PreviewImage file={formik.values.image} />}
