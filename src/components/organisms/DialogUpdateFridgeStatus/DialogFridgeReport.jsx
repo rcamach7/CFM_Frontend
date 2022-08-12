@@ -5,13 +5,6 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Slider,
   Stack,
   Step,
   StepContent,
@@ -25,7 +18,7 @@ import theme from 'theme';
 
 import { Report } from 'schema/dialog';
 
-import { PanelUploadImage } from 'components/molecules';
+import { PanelUpdateStatus, PanelUploadImage } from 'components/molecules';
 
 export default function DialogFridgeReport({
   fridgeName = 'Community Fridge Name',
@@ -162,49 +155,12 @@ export default function DialogFridgeReport({
                   mt={2}
                   justifyContent="space-between"
                 >
-                  <FormLabel>How full is the fridge?</FormLabel>
-                  <FormGroup>
-                    <Slider
-                      name="foodPercentage"
-                      aria-label="Fridge fullness"
-                      value={formik.values.foodPercentage}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      min={0}
-                      max={100}
-                      step={25}
-                      marks={sliderMarks}
-                      sx={fridgeSliderStyles}
-                      size="medium"
-                    />
-                  </FormGroup>
-                  <FormControl>
-                    <FormLabel>Select if applicable:</FormLabel>
-                    <RadioGroup
-                      name="operation"
-                      value={formik.values.operation}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                    >
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Radio />}
-                          value="out of order"
-                          label="Fridge needs servicing"
-                        />
-                        <FormControlLabel
-                          control={<Radio />}
-                          value="dirty"
-                          label="Fridge needs cleaning"
-                        />
-                        <FormControlLabel
-                          control={<Radio />}
-                          value="not at location"
-                          label="Fridge is no longer at location"
-                        />
-                      </FormGroup>
-                    </RadioGroup>
-                  </FormControl>
+                  <PanelUpdateStatus
+                    foodPercentage={formik.values.foodPercentage}
+                    handleChange={formik.handleChange}
+                    handleBlur={formik.handleBlur}
+                    operation={formik.values.operation}
+                  />
                   <Button onClick={handleNext} variant="contained" fullWidth>
                     Continue
                   </Button>

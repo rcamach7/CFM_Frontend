@@ -1,13 +1,20 @@
 import {
   FormControl,
+  FormControlLabel,
   FormGroup,
   FormLabel,
   RadioGroup,
   Slider,
+  Radio,
   Stack,
 } from '@mui/material';
 import React from 'react';
-const PanelUpdateStatus = (props) => {
+const PanelUpdateStatus = ({
+  foodPercentage,
+  operation,
+  handleChange,
+  handleBlur,
+}) => {
   //Functionality for MUI slider component
   const sliderMarks = [
     {
@@ -15,11 +22,11 @@ const PanelUpdateStatus = (props) => {
       label: 'Empty',
     },
     {
-      value: 25,
+      value: 33,
       label: 'A Few Items',
     },
     {
-      value: 50,
+      value: 66,
       label: 'Many Items',
     },
     {
@@ -33,11 +40,11 @@ const PanelUpdateStatus = (props) => {
     width: 7 / 8,
     '.MuiSlider-markLabel': {
       fontSize: 12,
-      color: theme.palette.text.secondary,
+      // color: theme.palette.text.secondary,
     },
     '.MuiSlider-markLabelActive': {
       fontSize: 12,
-      color: theme.palette.text.primary,
+      // color: theme.palette.text.primary,
     },
   };
 
@@ -49,33 +56,51 @@ const PanelUpdateStatus = (props) => {
         mt={2}
         justifyContent="space-between"
       >
-        <FormLabel>How full is the fridge?</FormLabel>
         <FormGroup>
+          <FormLabel>How full is the fridge?</FormLabel>
           <Slider
             name="foodPercentage"
             aria-label="Fridge fullness"
-            value={formik.values.foodPercentage}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            value={foodPercentage}
+            onChange={handleChange}
+            onBlur={handleBlur}
             min={0}
             max={100}
-            step={25}
+            step={33}
             marks={sliderMarks}
             sx={fridgeSliderStyles}
             size="medium"
           />
-          {formik.errors.foodPercentage && formik.touched.foodPercentage ? (
-            <div>{formik.errors.foodPercentage}</div>
-          ) : null}
+          {/* {formik.errors.foodPercentage && formik.touched.foodPercentage ? ( */}
+          {/* <div>{formik.errors.foodPercentage}</div> */}
+          {/* ) : null} */}
         </FormGroup>
+
+        <FormLabel>Select if applicable:</FormLabel>
         <FormControl>
-          <FormLabel>Select if applicable:</FormLabel>
           <RadioGroup
             name="operation"
-            value={formik.values.operation}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            value={operation}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
+          <FormGroup>
+            <FormControlLabel
+              control={<Radio />}
+              value="out of order"
+              label="Fridge needs servicing"
+            />
+            <FormControlLabel
+              control={<Radio />}
+              value="dirty"
+              label="Fridge needs cleaning"
+            />
+            <FormControlLabel
+              control={<Radio />}
+              value="not at location"
+              label="Fridge is no longer at location"
+            />
+          </FormGroup>
         </FormControl>
       </Stack>
     </div>
