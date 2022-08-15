@@ -9,12 +9,14 @@ import {
   Stack,
 } from '@mui/material';
 import React from 'react';
-const PanelUpdateStatus = ({
+import PropTypes from 'prop-types';
+
+export default function PanelUpdateStatus({
   foodPercentage,
   operation,
   handleChange,
   handleBlur,
-}) => {
+}) {
   //Functionality for MUI slider component
   const sliderMarks = [
     {
@@ -69,13 +71,11 @@ const PanelUpdateStatus = ({
             step={33}
             marks={sliderMarks}
             sx={fridgeSliderStyles}
-            size="medium"
           />
           {/* {formik.errors.foodPercentage && formik.touched.foodPercentage ? ( */}
           {/* <div>{formik.errors.foodPercentage}</div> */}
           {/* ) : null} */}
         </FormGroup>
-
         <FormLabel>Select if applicable:</FormLabel>
         <FormControl>
           <RadioGroup
@@ -105,6 +105,10 @@ const PanelUpdateStatus = ({
       </Stack>
     </div>
   );
+}
+PanelUpdateStatus.propTypes = {
+  foodPercentage: PropTypes.number,
+  operation: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
 };
-
-export default PanelUpdateStatus;
