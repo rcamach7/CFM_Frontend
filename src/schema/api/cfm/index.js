@@ -1,4 +1,4 @@
-import { array, boolean, date, number, object, string } from 'Yup';
+import { array, boolean, date, number, object, string } from 'yup';
 
 const Tag = string().max(140).trim().required();
 const Tags = array().of(Tag).nullable();
