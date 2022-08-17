@@ -17,13 +17,16 @@ export default function FridgePanel(props) {
       city: '',
       state: '',
       zip: '',
+      website: '',
+      instagram: '',
       notes: '',
     },
     validationSchema: dialog.Fridge,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      props.handleNext(0, values);
     },
   });
+
   return (
     <>
       <StepLabel>Fridge Location Information</StepLabel>
@@ -81,6 +84,28 @@ export default function FridgePanel(props) {
               variant="outlined"
             />
             <TextField
+              id="website"
+              name="website"
+              label="Website"
+              value={formik.values.website}
+              onChange={formik.handleChange}
+              error={formik.touched.website && Boolean(formik.errors.website)}
+              helperText={formik.touched.website && formik.errors.website}
+              variant="outlined"
+            />
+            <TextField
+              id="instagram"
+              name="instagram"
+              label="Instagram"
+              value={formik.values.instagram}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.instagram && Boolean(formik.errors.instagram)
+              }
+              helperText={formik.touched.instagram && formik.errors.instagram}
+              variant="outlined"
+            />
+            <TextField
               id="description"
               name="description"
               label="Description"
@@ -94,14 +119,13 @@ export default function FridgePanel(props) {
             />
             <Stack
               direction={{ md: 'row-reverse', xs: 'column' }}
-              justifyContent="center"
+              justifyContent="space-between"
               spacing={4}
               pt={4}
             >
               <Button
                 aria-label="Click to continue to the next panel"
                 variant="contained"
-                // onClick={props.handleNext}
                 type="submit"
                 sx={{ py: 3, px: { md: 20 }, border: '2px solid transparent' }}
               >

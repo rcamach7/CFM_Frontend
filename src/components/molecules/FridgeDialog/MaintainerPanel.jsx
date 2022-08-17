@@ -7,91 +7,100 @@ import {
   TextField,
 } from '@mui/material';
 
+import dialog from '../../../schema/dialog';
+
 export default function MaintainerPanel(props) {
   const formik = useFormik({
     initialValues: {
-      fullName: '',
-      organization: '',
-      phoneNumber: '',
+      name: '',
       email: '',
-      website: '',
-      instagram: '',
+      organization: '',
+      phone: '',
     },
+    validationSchema: dialog.Maintainer,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      props.handleNext(1, values);
     },
   });
+
+  console.log(dialog.Maintainer);
+
   return (
     <>
       <StepLabel>Maintainer Contact Information</StepLabel>
       <StepContent>
-        <Stack direction="column" spacing={3} mx={4} mb={4}>
-          <TextField
-            id="fullName"
-            label="Full Name"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.fullName}
-          />
-          <TextField
-            id="organization"
-            label="Organization"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.organization}
-          />
-          <TextField
-            id="phoneNumber"
-            label="Phone Number"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.phoneNumber}
-          />
-          <TextField
-            id="email"
-            label="Email"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          <TextField
-            id="website"
-            label="Website"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.website}
-          />
-          <TextField
-            id="instagram"
-            label="Instagram"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.instagram}
-          />
-          <Stack
-            direction={{ md: 'row-reverse', xs: 'column' }}
-            justifyContent="center"
-            spacing={4}
-            pt={4}
-          >
-            <Button
-              aria-label="Click to continue to the next panel"
-              variant="contained"
-              onClick={props.handleNext}
-              sx={{ py: 3, px: { md: 20 }, border: '2px solid transparent' }}
-            >
-              Next
-            </Button>
-            <Button
-              aria-label="Click to return to the preview panel"
+        <form onSubmit={formik.handleSubmit}>
+          <Stack direction="column" spacing={3} mx={4} mb={4}>
+            <TextField
+              id="name"
+              name="name"
+              label="Full Name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
               variant="outlined"
-              onClick={props.handleBack}
-              sx={{ py: 3, px: { md: 20 } }}
+            />
+            <TextField
+              id="organization"
+              name="organization"
+              label="Organization"
+              value={formik.values.organization}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.organization &&
+                Boolean(formik.errors.organization)
+              }
+              helperText={
+                formik.touched.organization && formik.errors.organization
+              }
+              variant="outlined"
+            />
+            <TextField
+              id="phone"
+              name="phone"
+              label="Phone Number"
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              error={formik.touched.phone && Boolean(formik.errors.phone)}
+              helperText={formik.touched.phone && formik.errors.phone}
+              variant="outlined"
+            />
+            <TextField
+              id="email"
+              name="email"
+              label="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              variant="outlined"
+            />
+            <Stack
+              direction={{ md: 'row-reverse', xs: 'column' }}
+              justifyContent="space-between"
+              spacing={4}
+              pt={4}
             >
-              Back
-            </Button>
+              <Button
+                aria-label="Click to continue to the next panel"
+                variant="contained"
+                type="submit"
+                sx={{ py: 3, px: { md: 20 }, border: '2px solid transparent' }}
+              >
+                Next
+              </Button>
+              <Button
+                aria-label="Click to return to the preview panel"
+                variant="outlined"
+                onClick={props.handleBack}
+                sx={{ py: 3, px: { md: 20 } }}
+              >
+                Back
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
+        </form>
       </StepContent>
     </>
   );

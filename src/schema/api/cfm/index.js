@@ -21,8 +21,6 @@ const Maintainer = object({
   phone: string()
     .matches(/^\(\d{3}\) \d{3}-\d{4}$/)
     .optional(),
-  website: string().url().optional(),
-  instagram: string().url().optional(),
 }).nullable();
 
 const Fridge = object({
@@ -33,6 +31,8 @@ const Fridge = object({
   maintainer: Maintainer.optional(),
   photoURL: string().url().optional(),
   notes: string().min(1).max(300).trim().optional(),
+  website: string().url().optional(),
+  instagram: string().url().optional(),
   verified: boolean().default(false),
 });
 
@@ -46,5 +46,5 @@ const Report = object({
   notes: string().min(0).max(300).trim().optional(),
 });
 
-const API = { Fridge, Report, Location };
+const API = { Fridge, Report, Location, Maintainer };
 export default API;

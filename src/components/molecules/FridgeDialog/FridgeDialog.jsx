@@ -10,7 +10,16 @@ import ConfirmPanel from './ConfirmPanel';
 export default function FridgeDialog() {
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = () => {
+  const [fridgeDetails, setFridgeDetails] = useState();
+  const [maintainerDetails, setMaintainerDetails] = useState();
+
+  const handleNext = (group = null, values = null) => {
+    switch (group) {
+      case 0:
+        setFridgeDetails(values);
+      case 1:
+        setMaintainerDetails(values);
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 

@@ -24,7 +24,7 @@ export default function PhotoPanel(props) {
           </Typography>
           <Stack
             direction={{ md: 'row-reverse', xs: 'column' }}
-            justifyContent="center"
+            justifyContent="space-between"
             spacing={4}
             pt={4}
           >
