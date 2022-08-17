@@ -7,7 +7,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import dialog from '../../../schema/dialog';
+import schema from '#schema/dialog/index.js';
 
 export default function MaintainerPanel(props) {
   const formik = useFormik({
@@ -17,13 +17,11 @@ export default function MaintainerPanel(props) {
       organization: '',
       phone: '',
     },
-    validationSchema: dialog.Maintainer,
+    validationSchema: schema.Maintainer,
     onSubmit: (values) => {
       props.handleNext(1, values);
     },
   });
-
-  console.log(dialog.Maintainer);
 
   return (
     <>

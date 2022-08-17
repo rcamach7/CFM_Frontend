@@ -8,6 +8,9 @@
     "community fridge",
     "map"
   ],
+  "imports": {
+    "#schema/*": "./src/schema/*"
+  },
   "homepage": "https://github.com/CollectiveFocus/CFM_Frontend#readme",
   "author": "Collective Focus <info@collectivefocus.site> (https://collectivefocus.site/)",
   "contributors": [

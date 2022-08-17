@@ -7,7 +7,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import dialog from '../../../schema/dialog';
+import schema from '#schema/dialog/index.js';
 
 export default function FridgePanel(props) {
   const formik = useFormik({
@@ -21,7 +21,7 @@ export default function FridgePanel(props) {
       instagram: '',
       notes: '',
     },
-    validationSchema: dialog.Fridge,
+    validationSchema: schema.Fridge,
     onSubmit: (values) => {
       props.handleNext(0, values);
     },
