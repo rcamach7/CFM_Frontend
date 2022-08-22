@@ -1,4 +1,4 @@
-import { array, boolean, date, number, object, string } from 'Yup';
+import { array, boolean, date, number, object, string } from 'yup';
 
 const Tag = string().max(140).trim().required();
 const Tags = array().of(Tag).nullable();
@@ -46,5 +46,12 @@ const Report = object({
   notes: string().min(0).max(300).trim().optional(),
 });
 
-const API = { Fridge, Report, Location };
+const Contact = object({
+  name: string().min(1).max(70).trim().required(),
+  email: string().email().required(),
+  subject: string().min(0).max(70).trim().required(),
+  message: string().min(0).max(2048).trim().required(),
+});
+
+const API = { Contact, Fridge, Report, Location };
 export default API;
