@@ -76,7 +76,7 @@ export async function getServerSideProps() {
   const fridgeUrl =
     process.env.NEXT_PUBLIC_CFM_API_URL + '/v1/fridges/' + fridgeId;
   const responses = await Promise.all([
-    fetch(fridgeUrl, { headers: { Accept: 'application/json' } }),
+    (fridgeUrl, { headers: { Accept: 'application/json' } }),
     fetch(fridgeUrl + '/reports', { headers: { Accept: 'application/json' } }),
   ]);
   for (const response of responses) {

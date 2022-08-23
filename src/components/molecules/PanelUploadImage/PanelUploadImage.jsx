@@ -42,11 +42,20 @@ const PanelUploadImage = (props) => {
     if (!supportedImageTypes.includes(uploadType)) {
       setSnack({ ...snack, open: true });
     } else {
-      console.log(imageUpload.type);
       const imageOut = await convertImage(imageUpload);
       formik.setFieldValue('image', imageOut);
       formik.setTouched({ image: true });
       console.log(imageOut); //@TODO - Make Post Request
+      const photoSubmitUrl = process.env.NEXT_PUBLIC_CFM_API_URL + '/v1/image';
+      const response = fetch(photoSubmitUrl, {
+        method: 'POST',
+        body: JSON.stringify(imageOut),
+        headers: {
+          'Content-Type': 'image/webp',
+          accept: 'application/json',
+        },
+      });
+      console.table(response);
     }
     return;
   };
