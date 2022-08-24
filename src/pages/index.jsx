@@ -2,7 +2,6 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { Typography, Grid } from '@mui/material';
 import MascotCard from 'components/MascotCard';
-import AboutCommunityFridges from 'components/AboutCommunityFridges';
 import PageHero from 'components/atoms/PageHero';
 import Footer from 'components/atoms/PageFooter';
 
@@ -79,7 +78,7 @@ export default function HomePage(props) {
         px={4}
       >
         <Grid item xs={12} md={12} lg={12}>
-          <AboutCommunityFridges {...aboutData} />
+          <MascotCard {...aboutData} />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <Typography

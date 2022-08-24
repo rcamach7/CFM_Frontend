@@ -2,28 +2,46 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Stack } from '@mui/material';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 
 export default function MascotCard({ img, title, text, link, buttonTitle }) {
   return (
-    <Stack
-      direction="column"
-      justifyContent="space-between"
-      alignItems="center"
-      spacing={2}
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: { xs: 'center', md: 'space-evenly' },
+        alignItems: 'center',
+      }}
+      p={2}
     >
-      <Image {...img} />
-      <Typography variant="h3">{title}</Typography>
-      <Typography variant="body1" textAlign="center">
-        {text}
-      </Typography>
-      <Link href={link} passHref>
-        <Button component="a" variant="outlined" fullWidth={true}>
-          {buttonTitle || 'LEARN MORE'}
-        </Button>
-      </Link>
-    </Stack>
+      <Image {...img} layout="fixed" />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="h3" pt={1} textAlign="center">
+          {title}
+        </Typography>
+        <Typography
+          variant="body1"
+          p={2}
+          sx={{
+            textAlign: { xs: 'center', md: 'left' },
+            maxWidth: '450px',
+          }}
+        >
+          {text}
+        </Typography>
+        <Link href={link} passHref mt="auto">
+          <Button component="a" variant="outlined" fullWidth={true}>
+            {buttonTitle || 'LEARN MORE'}
+          </Button>
+        </Link>
+      </Box>
+    </Box>
   );
 }
 
@@ -40,4 +58,5 @@ MascotCard.propTypes = {
   text: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   buttonTitle: PropTypes.string,
+  type: PropTypes.string,
 };
