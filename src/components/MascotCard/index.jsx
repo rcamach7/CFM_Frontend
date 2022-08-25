@@ -1,8 +1,7 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Typography, Button, Box } from '@mui/material';
+import ButtonLink from '../molecules/ButtonLink';
+import { Typography, Box } from '@mui/material';
 
 export default function MascotCard({ img, title, text, link, buttonTitle }) {
   return (
@@ -10,8 +9,9 @@ export default function MascotCard({ img, title, text, link, buttonTitle }) {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: { xs: 'center', md: 'space-evenly' },
+        justifyContent: { xs: 'center' },
         alignItems: 'center',
+        gap: 2,
       }}
       p={2}
     >
@@ -22,7 +22,13 @@ export default function MascotCard({ img, title, text, link, buttonTitle }) {
           flexDirection: 'column',
         }}
       >
-        <Typography variant="h3" pt={1} textAlign="center">
+        <Typography
+          variant="h3"
+          pt={1}
+          textAlign="center"
+          // Affects all MascotCards, regardless of layout and their size.
+          sx={{ fontWeight: { md: 'bold' } }}
+        >
           {title}
         </Typography>
         <Typography
@@ -35,11 +41,10 @@ export default function MascotCard({ img, title, text, link, buttonTitle }) {
         >
           {text}
         </Typography>
-        <Link href={link} passHref mt="auto">
-          <Button component="a" variant="outlined" fullWidth={true}>
-            {buttonTitle || 'LEARN MORE'}
-          </Button>
-        </Link>
+        {/* Missing aria-label */}
+        <ButtonLink to={link} variant="outlined" aria-label="">
+          {buttonTitle || 'Learn More'}
+        </ButtonLink>
       </Box>
     </Box>
   );
