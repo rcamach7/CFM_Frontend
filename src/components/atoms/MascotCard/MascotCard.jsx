@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import Image from 'next/image';
-import ButtonLink from '../molecules/ButtonLink';
+import ButtonLink from 'components/molecules/ButtonLink';
 import { Typography, Box } from '@mui/material';
 
-export default function MascotCard({ img, title, text, link, buttonTitle }) {
+export default function MascotCard({ img, title, text, link }) {
   return (
     <Box
       sx={{
@@ -26,7 +26,6 @@ export default function MascotCard({ img, title, text, link, buttonTitle }) {
           variant="h3"
           pt={1}
           textAlign="center"
-          // Affects all MascotCards, regardless of layout and their size.
           sx={{ fontWeight: { md: 'bold' } }}
         >
           {title}
@@ -41,9 +40,8 @@ export default function MascotCard({ img, title, text, link, buttonTitle }) {
         >
           {text}
         </Typography>
-        {/* Missing aria-label */}
-        <ButtonLink to={link} variant="outlined" aria-label="">
-          {buttonTitle || 'Learn More'}
+        <ButtonLink to={link} variant="outlined" aria-label={title}>
+          LEARN MORE
         </ButtonLink>
       </Box>
     </Box>
@@ -62,6 +60,4 @@ MascotCard.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  buttonTitle: PropTypes.string,
-  type: PropTypes.string,
 };

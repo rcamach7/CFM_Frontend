@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { Typography, Grid } from '@mui/material';
-import MascotCard from 'components/MascotCard';
+import MascotCard from 'components/atoms/MascotCard';
 import PageHero from 'components/atoms/PageHero';
 import Footer from 'components/atoms/PageFooter';
 
@@ -9,6 +9,17 @@ export async function getStaticProps() {
   return {
     props: {
       mascotCard: [
+        {
+          img: {
+            src: '/mascot/pearTomatoAndFridge.svg',
+            alt: 'Picture of pear dancing with tomatoes stacked on top of each other',
+            width: 300,
+            height: 190,
+          },
+          title: 'About NYC Community Fridges',
+          text: 'A community fridge is a decentralized food resource. There are dozens of fridges hosted by volunteers across the New York City area. This website was made to make it easy for people to find fridges and get involved with the community fridge project.',
+          link: '/about',
+        },
         {
           img: {
             src: '/mascot/apple.svg',
@@ -47,21 +58,9 @@ export async function getStaticProps() {
   };
 }
 
-const aboutData = {
-  img: {
-    src: '/mascot/pearTomatoAndFridge.svg',
-    alt: 'Picture of pear dancing with tomatoes stacked on top of each other',
-    width: 300,
-    height: 185,
-  },
-  title: 'About NYC Community Fridges',
-  text: 'A community fridge is a decentralized food resource. There are dozens of fridges hosted by volunteers across the New York City area. This website was made to make it easy for people to find fridges and get involved with the community fridge project.',
-  link: '/about',
-  buttonTitle: 'Learn More',
-  type: 'about',
-};
+const mascotCardFirstItem = 1;
 
-export default function HomePage(props) {
+export default function HomePage({ mascotCard }) {
   return (
     <>
       <Head>
@@ -78,7 +77,7 @@ export default function HomePage(props) {
         px={4}
       >
         <Grid item xs={12} md={12} lg={12}>
-          <MascotCard {...aboutData} />
+          <MascotCard {...mascotCard[0]} />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <Typography
@@ -89,7 +88,7 @@ export default function HomePage(props) {
             Get involved with community fridges!
           </Typography>
         </Grid>
-        {props.mascotCard.map((card, index) => (
+        {mascotCard.slice(mascotCardFirstItem).map((card, index) => (
           <Grid item key={index} xs={12} md={4} lg={4}>
             <MascotCard key={'GetInvolved' + index} {...card} />
           </Grid>
